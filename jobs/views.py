@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from .models import Job
 
 
 # Create your views here.
-def nakarin(request):
-    return render(request, 'jobs/nakarin.html')
-
-
-def home(request):
+def homepage(request):
     # path: http://127.0.0.1:8000/
-    return render(request, 'jobs/home.html')
+    jobs = Job.objects
+    return render(request, 'jobs/home.html', {'jobs': jobs})
 
+
+def detail(request, job_id):
+    job_detail = get_object_or_404(Job, pk=job_id)
+    return render(request, 'jobs/detail.html', {'job': job_detail})
